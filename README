@@ -1,0 +1,16 @@
+FROM http://shallowsky.com/blog/linux/install/blocking-deb-dependencies.html
+
+To mock some_package:
+
+$ equivs-control some_package # This creates a file named some_package
+
+$ sed -i 's/Package: <package name; defaults to equivs-dummy>/Package: some_package/g' some_package
+
+# to get the remote version (for compatibility)
+# $ apt-cache policy <package> | grep 'Candidate: '
+
+$ sed -i 's/# Version: <enter version here; defaults to 1.0>/Version: some_version/g' some_package
+
+$ equivs-build some_package # This will create a package named 'some_package_some_version_all.deb'
+
+$ sudo dpkg -i some_package__some_version.deb # This will install your package
